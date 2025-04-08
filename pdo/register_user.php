@@ -1,10 +1,12 @@
 <?php
+include "User.php";
 session_start();
 $errors = [];
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password_text = $_POST['password'];
 $password = sha1($password_text);
+$role = 'user';
 try {
     $db = new PDO("sqlite:" . __dir__ . "/db.sqlite");
     check_name($name);
@@ -16,11 +18,10 @@ try {
         header("Location: register.php");
         exit;
     }
-    $query = $db->prepare("INSERT INTO users ( email, password) VALUES ( :email, :password)");
-//        $query->bindParam(':Name', $name);
-    $query->bindParam(':email', $email);
-    $query->bindParam(':password', $password);
-    $query->execute();
+    var_dump($errors);
+    $user =new User($db);
+    $user->setNom($name)->setEmail($email)->setPassword($password)->setRole($role);
+    $user->addToDB();
     $_SESSION['user'] = [
         'id' => $db->lastInsertId(),
         'email' => $email,
@@ -51,9 +52,8 @@ function check_email($email)
         $errors['email'] = "Invalid email";
     }
     $query = $db->prepare("SELECT * FROM users WHERE email = :email");
-    $query->bindParam(':email', $email);
-    $query->execute();
-    if ($query->rowCount() > 0) {
+    $query->execute([':email' =>  $email]);
+    if ($query->fetch()) {
         $errors['email'] = "Email already exists";
     }
 }
