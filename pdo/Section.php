@@ -1,36 +1,65 @@
 <?php
-
+include_once 'connexionBD.php';
 class Section
 {
-    private ?int $id = null;
-    private ?string $designation = null;
-    private ?string $description = null;
-    public function getId(): ?int
+    private $bd;
+    public function __construct()
     {
-        return $this->id;
+        $this->bd=ConnexionBD::getInstance();
     }
-    public function setId(int $id): static
+   public function ajouterSection($description,$designation)
+   {
+    $query="insert into section (designation,description) values(?,?)";
+    $req=$this->bd->prepare($query);
+    req->execute([$designation,$description]);
+   }
+   public function deleteSection($id)
+   {
+    $query="delete from section where id=?"; 
+    $req=$this->bd->prepare($query);
+    req->execute([$id]);
+   }
+   public function ListeSection()
+   {
+    $query="select * from section";
+    $req=$this->bd->prepare($query);
+    $req->execute();
+    $sections=$req->fetchAll(PDO::FETCH_OBJ);
+    $i=0;
+    foreach ($sections as $section)
     {
-        $this->id = $id;
-
-        return $this;
+        $i++;
+        echo "<tr>";
+        echo "<td>".$section->id."</td>";
+        echo "<td>".$section->designation."</td>";
+        echo "<td>".$section->description."</td>";
+        echo "<td>
+              <form  method='POST'>
+               <button type='submit' name='detail".$i."' class='btn btn-link'>
+                    <img src='' alt='Details' width='25' height='25'>
+                </button>
+              </form>";
+        echo "</tr>";
     }
-    public function getDesignation(): ?string
+   }
+    public function getSectionById($id)
     {
-        return $this->designation;
+     $query="select * from section where id=?";
+     $req=$this->bd->prepare($query);
+     $req->execute([$id]);
+     $section=$req->fetch(PDO::FETCH_OBJ);
+     return $section->designation;
     }
-    public function setDesignation(string $designation) : static
+    public function getSectionId($designation)
     {
-        $this->designation = $designation;
-        return $this;
-    }
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-        return $this;
+     $query="select * from section where designation=?";
+     $req=$this->bd->prepare($query);
+     $req->execute([$designation]);
+     $section=$req->fetch(PDO::FETCH_OBJ);
+     if($section==null)
+     {
+        return null;
+     }
+     return $section->id;
     }
 }

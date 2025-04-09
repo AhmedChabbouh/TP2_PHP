@@ -1,12 +1,19 @@
 <?php
 class User
 {
-    private ?int $id = null;
-    private ?string $nom = null;
-    private ?string $email = null;
+    private ?int $id;
+    private ?string $nom ;
+    private ?string $email ;
     private array $roles = [];
-    private ?string $password = null;
-
+    private ?string $password ;
+    public function __construct(?int $id = null, ?string $nom = null, ?string $email = null, array $roles = [], ?string $password = null)
+    {
+        $this->id = $id;
+        $this->nom = $nom;
+        $this->email = $email;
+        $this->roles = $roles;
+        $this->password = $password;
+    }
     public function getId(): ?int
     {
         return $this->id;
