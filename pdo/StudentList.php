@@ -5,20 +5,19 @@ $etudiant = new Etudiant();
 $etudiants = $etudiant->ListeEtudiant();
 for ($j = 0; $j < count($etudiants); $j++) {
 
-    if (isset($_POST['detail' . $j])) {
+    if (isset($_POST['detail'.$j])) {
         header("Location: detail.php?id=" . $etudiants[$j]->id);
-
         exit();
     }
-    if (isset($_POST['delete' . $j])) {
+    if (isset($_POST['delete'.$j])) {
         $etudiant->deleteEtudiant($etudiants[$j]->id);
         header("Location: StudentList.php");
 
     }
 
-    if (isset($_POST['edit' . $j])) {
+    if (isset($_POST['edit'.$j])) {
         echo $j;
-        header("Location: edit.php?id=" . $etudiants[$j]->id);
+        header("Location: edit.php?id=".$etudiants[$j]->id);
         exit();
     }
 
@@ -27,18 +26,22 @@ if (isset($_POST['add'])) {
     header("Location: add.php");
     exit();
 }
-$_SESSION['students'] = $etudiants;
+if(!isset($_SESSION['students'])){
+    $_SESSION['students'] = $etudiants;
+}
 ?>
 <div class="alert alert-secondary" role="alert">
     Liste des etudiants
 </div>
-<form class="d-flex" role="search" method="POST">
-    <input class="form-control me-2" type="search" style="width:400px;" aria-label="Search">
+<form class="d-flex" role="search" method="POST" action="filtrer.php">
+    <input class="form-control me-2" name="search" type="search" style="width:400px;" aria-label="Search">
     <div style="width:5px; "></div>
     <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
-    <button type='submit' name='add' class='btn btn-link'>
+    <?php if($_SESSION['user']['role']=='admin')
+    echo"<button type='submit' name='add' class='btn btn-link'>
         <img src='https://cdn-icons-png.flaticon.com/512/9977/9977366.png' alt='add' width='30' height='30'>
-    </button>
+    </button>";
+    ?>
 </form>
 
 <br><br>
@@ -80,12 +83,6 @@ $_SESSION['students'] = $etudiants;
         </script>
         </div>
     </div>
-    <div>
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
-        </form>
-    </div>
 </div>
 <br>
     <table id="studentsTable" >
@@ -102,11 +99,13 @@ $_SESSION['students'] = $etudiants;
         <tbody>
         <?php require_once 'Etudiant.php';
         $etudiant = new Etudiant();
-        $etudiant->afficherEtudiant($_SESSION['user']->role == 'admin');
+        $etudiant->afficherEtudiant($_SESSION['user']['role']=='admin',$etudiants);
         ?>
         </tbody>
     </table>
-    <script>
+    
+<?php include 'footer.php'; ?>
+<script>
         $(document).ready(function () {
             $('#studentsTable').DataTable({
                 pageLength: 5, // nombre d'éléments par page
@@ -116,4 +115,3 @@ $_SESSION['students'] = $etudiants;
             });
         });
     </script>
-<?php include 'footer.php'; ?>

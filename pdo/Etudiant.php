@@ -9,18 +9,18 @@ class Etudiant
     {
         $this->bd=ConnexionBD::getInstance();
     }
-   public function ListeEtudiant()
-   {
-    $query="select * from etudiant";
-    $req=$this->bd->prepare($query);
-    $req->execute();
-    return $req->fetchAll(PDO::FETCH_OBJ);
-   
-}
-    
-    public function afficherEtudiant(bool $isAdmin)
+
+    public function ListeEtudiant()
     {
-        $etudiants = $this->ListeEtudiant();
+        $query = "select * from etudiant";
+        $req = $this->bd->prepare($query);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_OBJ);
+
+    }
+
+    public function afficherEtudiant(bool $isAdmin,$etudiants)
+    {
         $section = new Section();
         $i = 0;
         foreach ($etudiants as $etudiant) {
@@ -66,9 +66,37 @@ public function afficher($e)
         echo "<td>".$section->getSectionById($etudiant->section)."</td>";
         echo "</tr>";
         $i++;
+
+        $section = new Section();
+        $i = 0;
+        foreach ($e as $etudiant) {
+
+            echo "<tr>";
+            echo "<td>" . $etudiant->id . "</td>";
+            echo "<td><img src='" . $etudiant->image . "' width='60' height='60'></td>";
+            echo "<td>" . $etudiant->name . "</td>";
+            echo "<td>" . $etudiant->birthday . "</td>";
+            echo "<td>" . $section->getSectionById($etudiant->section) . "</td>";
+            echo "</tr>";
+            $i++;
+        }
+
+    }
+
+
+
+}
+
+    public function Filtrer($filter)
+    {
+        $query ="select * from etudiant where name like ? or birthday like ? or section like ?";
+        $req = $this->bd->prepare($query);
+        $req->execute(['%' . $filter . '%', '%' . $filter . '%', '%' . $filter . '%']);
+        return $req->fetchAll(PDO::FETCH_OBJ);
     }
     
-   }
+    
+   
 public function deleteEtudiant($id)
    {
     $query="delete from etudiant where id=?"; 
