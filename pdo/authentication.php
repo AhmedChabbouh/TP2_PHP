@@ -2,13 +2,13 @@
 $password = sha1($_POST['password']);
 $email = $_POST['email'];
 $db= new PDO("sqlite:".__dir__."/db.sqlite");
-$query = $db->prepare("SELECT * FROM users WHERE email = :email AND password = :password ");
-$query->execute([':email' => $email, ':password' => $password]);
-if($query->fetch()){
+$query = $db->prepare("SELECT * FROM users WHERE email = :email ");
+$query->execute([':email' => $email]);
+if($user = $query->fetch(PDO::FETCH_ASSOC)){
     session_start();
-    $user = $query->fetch(PDO::FETCH_ASSOC);
     $_SESSION['user'] = $user;
-    header('Location: index.php');
+    var_dump($_SESSION);
+    header('Location: home.php');
 }
 else{
     foreach ($query->errorInfo() as $error) {

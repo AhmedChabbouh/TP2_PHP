@@ -8,7 +8,8 @@ private static $password = '';
 private static $bd = null;
 private function __construct(){
 try{
-self::$bd=new PDO('mysql:host='.self::$host.';dbname='.self::$dbname, self::$username, self::$password);
+    $dir = __DIR__.'/db.sqlite';
+self::$bd=new PDO('sqlite:'.$dir);
 
 } catch (PDOException $e) {
     echo $e->getMessage();

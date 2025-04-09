@@ -9,6 +9,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
+
 if (isset($_SESSION['students'])) {
     $students = $_SESSION['students'];
 } else {
@@ -24,12 +25,11 @@ $activeSheet->setCellValue('B1', 'Nom');
 $activeSheet->setCellValue('C1', 'Birthday');
 $activeSheet->setCellValue('D1', 'Section');
 foreach ($students as $student) {
-    $activeSheet->setCellValue('A' . ($student['id'] + 1), $student['id']);
-    $activeSheet->setCellValue('B' . ($student['id'] + 1), htmlspecialchars($student['name']));
-    $activeSheet->setCellValue('C' . ($student['id'] + 1), htmlspecialchars($student['birthday']));
-    $activeSheet->setCellValue('D' . ($student['id'] + 1), htmlspecialchars($student['section']));
+    $activeSheet->setCellValue('A' . ($student->id + 1), $student->id);
+    $activeSheet->setCellValue('B' . ($student->id + 1), htmlspecialchars($student->name));
+    $activeSheet->setCellValue('C' . ($student->id + 1), htmlspecialchars($student->birthday));
+    $activeSheet->setCellValue('D' . ($student->id + 1), htmlspecialchars($student->section));
 }
-//var_dump($students);
 try {
     $writer = new Xlsx($spreadsheet);
     $writer->save('php://output');
@@ -37,4 +37,3 @@ try {
 }catch (Exception $e){
     echo $e->getMessage();
 }
-exit;

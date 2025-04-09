@@ -11,13 +11,13 @@ class Section
    {
     $query="insert into section (designation,description) values(?,?)";
     $req=$this->bd->prepare($query);
-    req->execute([$designation,$description]);
+    $req->execute([$designation,$description]);
    }
    public function deleteSection($id)
    {
     $query="delete from section where id=?"; 
     $req=$this->bd->prepare($query);
-    req->execute([$id]);
+    $req->execute([$id]);
    }
    public function ListeSection()
    {

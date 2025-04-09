@@ -1,8 +1,12 @@
 <?php
 
-session_start();
 require_once 'vendor/autoload.php';
+session_start();
 
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->SetFont('dejavusans', '', 10);
@@ -22,10 +26,10 @@ if (isset($_SESSION['students'])) {
 }
 foreach ($students as $student) :
     $output .= '<tr>';
-    $output .= '<td>' . $student['id'] . '</td>';
-    $output .= '<td>' . htmlspecialchars($student['name']) . '</td>';
-    $output .= '<td>' . htmlspecialchars($student['birthday']) . '</td>';
-    $output .= '<td>' . htmlspecialchars($student['section']) . '</td>';
+    $output .= '<td>' . $student->id . '</td>';
+    $output .= '<td>' . htmlspecialchars($student->name) . '</td>';
+    $output .= '<td>' . htmlspecialchars($student->birthday) . '</td>';
+    $output .= '<td>' . htmlspecialchars($student->section) . '</td>';
     $output .= '</tr>';
 endforeach;
 $output .= '</table>';

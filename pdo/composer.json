@@ -1,0 +1,20 @@
+{
+    "name": "moe/students",
+    "require": {
+        "league/csv": "^9.23",
+        "fpdf/fpdf": "^1.86",
+        "tecnickcom/tcpdf": "^6.7",
+        "phpoffice/phpspreadsheet": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Moe\\Students\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "amin khalsi",
+            "email": "aminkhalsi@gmail.com"
+        }
+    ]
+}
