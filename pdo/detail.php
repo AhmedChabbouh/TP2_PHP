@@ -24,7 +24,7 @@ $etudiant = $e->getEtudiantById($id);
             left: 50%;
             transform: translate(-50%, -50%);
             width: 500px;
-            height: 500px;
+            height: fit-content;
             padding: 20px;
             border-radius: 10px;
             background-color: #f8f9fa;
@@ -70,10 +70,5 @@ $etudiant = $e->getEtudiantById($id);
 </ul>
         </div>
         </div>
-        <?php
-
-
-
-?>
     </body>
 </html>
