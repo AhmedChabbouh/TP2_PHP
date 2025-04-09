@@ -13,7 +13,7 @@
     <label for="email">Email:</label>
     <input type="text" id="email" name="email" placeholder="email" required>
     <label for="password">Password:</label>
-    <input type="password" id="password" placeholder="password">
+    <input type="password" name="password" id="password" placeholder="password">
     <button type="submit">Log in</button>
     <p>Don't have an account? <a href="register.php">Register</a></p>
 </form>
