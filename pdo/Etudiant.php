@@ -62,9 +62,9 @@ public function getEtudiantById($id)
    }
 public function updateEtudiant($name,$birthday,$section,$id,$photo)
    {
-    $query="update etudiant set name=?,birthday=?,section=? where id=?"; 
+    $query="update etudiant set name=?,birthday=?,section=?,image=? where id=?"; 
     $req=$this->bd->prepare($query);
-    $req->execute([$name,$birthday,$section,$id]);
+    $req->execute([$name,$birthday,$section,$photo,$id]);
    }
 public function addEtudiant($name,$birthday,$section,$photo)
    {

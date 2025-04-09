@@ -85,7 +85,7 @@ $etudiant = $e->getEtudiantById($id);
               echo "<div style='color:red'>Section  Invalide!</div>";
            }
            elseif(isset($_POST['section'])and $_POST['section']=="" and isset($_POST['change']) ){
-            $_POST['section']=$e->getSectionId($etudiant->section);}
+            $_POST['section']=$s->getSectionById($etudiant->section);}
             ?>
             <br>
             donner une photo de l'etudiant :
@@ -93,16 +93,17 @@ $etudiant = $e->getEtudiantById($id);
             <?php
             if(isset($_FILES['photo']))
               {
-                if($_FILES['photo']['type']!='image/jpeg'  and isset($_POST['change']) ){
+                $d='images/'.$_FILES['photo']['name'];
+                if($_FILES['photo']['size']!=0 and $_FILES['photo']['type']!='image/jpeg'  and isset($_POST['change']) ){
                     echo "<div style='color:red'>Ce n'est pas une photo!</div>";}
               elseif($_FILES['photo']['size']==0 and isset($_POST['change']) ){
-                $_FILES['photo']['name']=$etudiant->image;
+                $d=$etudiant->image;
               }
            }
             ?>
             <br>
             <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="submit" name="confirm" class="btn btn-outline-secondary" style="position: absolute;">Valider Les Données</button>
+            <button type="submit" name="change" class="btn btn-outline-secondary" style="position: absolute;">Valider Les Données</button>
             </div>
             <div style="width:30px;heigth: 30px;"><br><br></div>
         </form>
@@ -110,13 +111,13 @@ $etudiant = $e->getEtudiantById($id);
         </div>
         <?php
 
-if(isset($_POST['change'])   and $_FILES['photo']['type']=='image/jpeg')
+if(isset($_POST['change']) && $_FILES['photo']['type']=='image/jpeg')
 {
-    move_uploaded_file($_FILES['photo']['tmp_name'], 'images/'.$_FILES['photo']['name']);
-    
-    $e->updateEtudiant($_POST['name'],$_POST['birthday'],$id,$s->getSectionId($_POST['section']),'images/'.$_FILES['photo']['name']);
+    move_uploaded_file($_FILES['photo']['tmp_name'], $d);
+    $e->updateEtudiant($_POST['name'],$_POST['birthday'],$s->getSectionId($_POST['section']),$id,$d);
     header("Location: StudentList.php ");
     exit();
+    
 }
 }
 catch(PDOException $e){
