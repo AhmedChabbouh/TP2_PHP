@@ -111,7 +111,7 @@ $etudiant = $e->getEtudiantById($id);
         </div>
         <?php
 
-if(isset($_POST['change']) && $_FILES['photo']['type']=='image/jpeg')
+if(isset($_POST['change']) && ($_FILES['photo']['type']=='image/jpeg' or $_FILES['photo']['size']==0))
 {
     move_uploaded_file($_FILES['photo']['tmp_name'], $d);
     $e->updateEtudiant($_POST['name'],$_POST['birthday'],$s->getSectionId($_POST['section']),$id,$d);

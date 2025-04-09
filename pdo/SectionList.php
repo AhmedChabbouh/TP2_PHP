@@ -13,7 +13,7 @@
     
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+        <a class="nav-link active" aria-current="page" href="home.php">Home</a>
         <a class="nav-link" href="StudentList.php">Liste des Etudiants</a>
         <a class="nav-link" href="SectionList.php">Liste des Sections</a>
         <a class="nav-link" href="">Logout</a>
@@ -56,7 +56,15 @@
             <?php
             include 'Section.php';
             $section = new Section();
-            $section->ListeSection();
+            $section->afficherSection();
+            $s=$section->listSection();
+            for($j=0;$j<count($s);$j++){
+                if(isset($_POST['action'.$j]))
+                {
+                  header("Location: List.php?id=".$s[$j]->id);
+                  exit();
+                }
+            }
             ?>
         </tbody>
     </table>

@@ -16,9 +16,9 @@ class Etudiant
     return $req->fetchAll(PDO::FETCH_OBJ);
    
 }
-public function afficherEtudiant()
+public function afficherEtudiant($etudiants)
 {
-    $etudiants = $this->ListeEtudiant();
+    
     $section=new Section();
     $i=0;
     foreach ($etudiants as $etudiant)
@@ -42,6 +42,25 @@ public function afficherEtudiant()
                     <img src='https://cdn4.iconfinder.com/data/icons/social-messaging-ui-coloricon-1/21/30-512.png' alt='edit' width='25' height='25'>
                 </button>
               </form>";
+        echo "</tr>";
+        $i++;
+    }
+    
+   }
+public function afficher($e)
+{
+    
+    $section=new Section();
+    $i=0;
+    foreach ($e as $etudiant)
+    {
+        
+        echo "<tr>";
+        echo "<td>".$etudiant->id."</td>";
+        echo "<td><img src='".$etudiant->image."' width='60' height='60'></td>";
+        echo "<td>".$etudiant->name."</td>";
+        echo "<td>".$etudiant->birthday."</td>";
+        echo "<td>".$section->getSectionById($etudiant->section)."</td>";
         echo "</tr>";
         $i++;
     }

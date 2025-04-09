@@ -13,7 +13,7 @@
       
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+          <a class="nav-link active" aria-current="page" href="home.php">Home</a>
           <a class="nav-link" href="StudentList.php">Liste des Etudiants</a>
           <a class="nav-link" href="SectionList.php">Liste des Sections</a>
           <a class="nav-link" href="">Logout</a>
