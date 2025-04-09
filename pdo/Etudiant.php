@@ -5,29 +5,27 @@ include_once 'Section.php';
 class Etudiant
 {
     private $bd;
-
     public function __construct()
     {
-        $this->bd = ConnexionBD::getInstance();
+        $this->bd=ConnexionBD::getInstance();
     }
-
-    public function ListeEtudiant()
-    {
-        $query = "select * from etudiant";
-        $req = $this->bd->prepare($query);
-        $req->execute();
-        return $req->fetchAll(PDO::FETCH_OBJ);
-
-    }
-
+   public function ListeEtudiant()
+   {
+    $query="select * from etudiant";
+    $req=$this->bd->prepare($query);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_OBJ);
+   
+}
+    
     public function afficherEtudiant(bool $isAdmin)
     {
         $etudiants = $this->ListeEtudiant();
         $section = new Section();
         $i = 0;
         foreach ($etudiants as $etudiant) {
-
-            echo "<tr>";
+        
+        echo "<tr>";
             echo "<td>" . $etudiant->id . "</td>";
             echo "<td><img src='" . $etudiant->image . "' width='60' height='60'></td>";
             echo "<td>" . $etudiant->name . "</td>";
@@ -42,67 +40,59 @@ class Etudiant
                     <img src='https://cdn4.iconfinder.com/data/icons/social-messaging-ui-coloricon-1/21/30-512.png' alt='edit' width='25' height='25'>
                 </button>
               </form>";
-                echo "</tr>";
+        echo "</tr>";
             } else {
                 echo "</form></td></tr>";
             }
-            $i++;
-        }
-
+        $i++;
     }
+    
+   }
 
 
-    public function afficher($e)
+public function afficher($e)
+{
+    
+    $section=new Section();
+    $i=0;
+    foreach ($e as $etudiant)
     {
-
-        $section = new Section();
-        $i = 0;
-        foreach ($e as $etudiant) {
-
-            echo "<tr>";
-            echo "<td>" . $etudiant->id . "</td>";
-            echo "<td><img src='" . $etudiant->image . "' width='60' height='60'></td>";
-            echo "<td>" . $etudiant->name . "</td>";
-            echo "<td>" . $etudiant->birthday . "</td>";
-            echo "<td>" . $section->getSectionById($etudiant->section) . "</td>";
-            echo "</tr>";
-            $i++;
-        }
-
+        
+        echo "<tr>";
+        echo "<td>".$etudiant->id."</td>";
+        echo "<td><img src='".$etudiant->image."' width='60' height='60'></td>";
+        echo "<td>".$etudiant->name."</td>";
+        echo "<td>".$etudiant->birthday."</td>";
+        echo "<td>".$section->getSectionById($etudiant->section)."</td>";
+        echo "</tr>";
+        $i++;
     }
-
-    public
-    function deleteEtudiant($id)
-    {
-        $query = "delete from etudiant where id=?";
-        $req = $this->bd->prepare($query);
-        $req->execute([$id]);
-    }
-
-    public
-    function getEtudiantById($id)
-    {
-        $query = "select * from etudiant where id=?";
-        $req = $this->bd->prepare($query);
-        $req->execute([$id]);
-        return $req->fetch(PDO::FETCH_OBJ);
-    }
-
-    public
-    function updateEtudiant($name, $birthday, $section, $id, $photo)
-    {
-        $query = "update etudiant set name=?,birthday=?,section=? where id=?";
-        $req = $this->bd->prepare($query);
-        $req->execute([$name, $birthday, $section, $id]);
-    }
-
-    public
-    function addEtudiant($name, $birthday, $section, $photo)
-    {
-        $query = "insert into etudiant (name,birthday,section,image) values(?,?,?,?)";
-        $req = $this->bd->prepare($query);
-        $req->execute([$name, $birthday, $section, $photo]);
-    }
+    
+   }
+public function deleteEtudiant($id)
+   {
+    $query="delete from etudiant where id=?"; 
+    $req=$this->bd->prepare($query);
+    $req->execute([$id]);
+   }
+public function getEtudiantById($id)
+   {
+    $query="select * from etudiant where id=?";
+    $req=$this->bd->prepare($query);
+    $req->execute([$id]);
+    return $req->fetch(PDO::FETCH_OBJ);
+   }
+public function updateEtudiant($name,$birthday,$section,$id,$photo)
+   {
+    $query="update etudiant set name=?,birthday=?,section=?,image=? where id=?"; 
+    $req=$this->bd->prepare($query);
+    $req->execute([$name,$birthday,$section,$photo,$id]);
+   }
+public function addEtudiant($name,$birthday,$section,$photo)
+   {
+    $query="insert into etudiant (name,birthday,section,image) values(?,?,?,?)"; 
+    $req=$this->bd->prepare($query);
+    $req->execute([$name,$birthday,$section,$photo]);
+   }
 }
-
 ?>

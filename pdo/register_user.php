@@ -1,5 +1,6 @@
 <?php
 include "User.php";
+include "connexionBD.php";
 session_start();
 $errors = [];
 $name = $_POST['name'];
@@ -8,7 +9,7 @@ $password_text = $_POST['password'];
 $password = sha1($password_text);
 $role = 'user';
 try {
-    $db = new PDO("sqlite:" . __dir__ . "/db.sqlite");
+    $db = connexionBD::getInstance();
     check_name($name);
     check_email($email);
     check_password($password_text);
@@ -28,7 +29,7 @@ try {
         'password' => $password,
         'role' => 'user'
     ];
-    header("Location: index.php");
+    header("Location: home.php");
     exit;
 } catch (PDOException $e) {
     echo $e->getMessage();

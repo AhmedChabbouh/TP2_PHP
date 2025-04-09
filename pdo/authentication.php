@@ -1,7 +1,8 @@
 <?php
+include_once('connexionBD.php');
 $password = sha1($_POST['password']);
 $email = $_POST['email'];
-$db= new PDO("sqlite:".__dir__."/db.sqlite");
+$db=connexionBD::getInstance();
 $query = $db->prepare("SELECT * FROM users WHERE email = :email ");
 $query->execute([':email' => $email]);
 if($user = $query->fetch(PDO::FETCH_ASSOC)){
