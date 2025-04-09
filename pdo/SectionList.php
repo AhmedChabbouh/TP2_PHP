@@ -7,6 +7,13 @@ if (!isset($_SESSION["sections"])) {
     $_SESSION["sections"] = $section->listSection();
 }
 $sections=$_SESSION["sections"];
+$se = $section->listSection();
+        for ($j = 0; $j < count($se); $j++) {
+            if (isset($_POST['action' . $j])) {
+                header("Location: List.php?id=" . $se[$j]->id);
+                exit();
+            }
+        }
 ?>
     <div class="alert alert-secondary" role="alert">
         Liste des sections
@@ -56,13 +63,7 @@ foreach ($sections as $s) {
         <tbody>
         <?php
         $section->afficherSection();
-        $se = $section->listSection();
-        for ($j = 0; $j < count($se); $j++) {
-            if (isset($_POST['action' . $j])) {
-                header("Location: List.php?id=" . $se[$j]->id);
-                exit();
-            }
-        }
+        
         ?>
         </tbody>
     </table>

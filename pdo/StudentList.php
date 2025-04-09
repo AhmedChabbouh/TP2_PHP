@@ -3,6 +3,10 @@
 require_once 'Etudiant.php';
 $etudiant = new Etudiant();
 $etudiants = $etudiant->ListeEtudiant();
+if (isset($_POST['add'])) {
+  header("Location: add.php");
+  exit();
+}
 for ($j = 0; $j < count($etudiants); $j++) {
 
     if (isset($_POST['detail'.$j])) {
@@ -12,6 +16,7 @@ for ($j = 0; $j < count($etudiants); $j++) {
     if (isset($_POST['delete'.$j])) {
         $etudiant->deleteEtudiant($etudiants[$j]->id);
         header("Location: StudentList.php");
+        exit();
 
     }
 
@@ -22,10 +27,8 @@ for ($j = 0; $j < count($etudiants); $j++) {
     }
 
 }
-if (isset($_POST['add'])) {
-    header("Location: add.php");
-    exit();
-}
+
+
 if(!isset($_SESSION['students'])){
     $_SESSION['students'] = $etudiants;
 }
@@ -34,15 +37,19 @@ if(!isset($_SESSION['students'])){
     Liste des etudiants
 </div>
 <form class="d-flex" role="search" method="POST" action="filtrer.php">
-    <input class="form-control me-2" name="search" type="search" style="width:400px;" aria-label="Search">
+    <input class="form-control " name="search" type="search" style="width:400px;" aria-label="Search">
     <div style="width:5px; "></div>
     <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
-    <?php if($_SESSION['user']['role']=='admin')
-    echo"<button type='submit' name='add' class='btn btn-link'>
-        <img src='https://cdn-icons-png.flaticon.com/512/9977/9977366.png' alt='add' width='30' height='30'>
-    </button>";
-    ?>
-</form>
+    </form>
+
+<?php if($_SESSION['user']['role'] == 'admin'): ?>
+    <form class="d-flex" method="POST" action="StudentList.php">
+        <button type="submit" name="add" class="btn btn-link">
+            <img src="https://cdn-icons-png.flaticon.com/512/9977/9977366.png" alt="add" width="30" height="30">
+        </button>
+    </form>
+<?php endif; ?>
+
 
 <br><br>
 <div class="d-flex flex-row mb-3">
@@ -74,13 +81,7 @@ if(!isset($_SESSION['students'])){
             $copy .= "\\n";
         }
         ?>
-        <script>
-            document.querySelector("#copy").addEventListener("click", () => {
-                const text = "<?= $copy ?>";
-                navigator.clipboard.writeText(text);
-                alert("Text copied to clipboard");
-            });
-        </script>
+        
         </div>
     </div>
 </div>
@@ -115,3 +116,10 @@ if(!isset($_SESSION['students'])){
             });
         });
     </script>
+    <script>
+            document.querySelector("#copy").addEventListener("click", () => {
+                const text = "<?= $copy ?>";
+                navigator.clipboard.writeText(text);
+                alert("Text copied to clipboard");
+            });
+        </script>

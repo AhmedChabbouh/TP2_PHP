@@ -67,19 +67,7 @@ public function afficher($e)
         echo "</tr>";
         $i++;
 
-        $section = new Section();
-        $i = 0;
-        foreach ($e as $etudiant) {
-
-            echo "<tr>";
-            echo "<td>" . $etudiant->id . "</td>";
-            echo "<td><img src='" . $etudiant->image . "' width='60' height='60'></td>";
-            echo "<td>" . $etudiant->name . "</td>";
-            echo "<td>" . $etudiant->birthday . "</td>";
-            echo "<td>" . $section->getSectionById($etudiant->section) . "</td>";
-            echo "</tr>";
-            $i++;
-        }
+        
 
     }
 
