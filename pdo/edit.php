@@ -37,7 +37,7 @@ $etudiant = $e->getEtudiantById($id);
 
         </style>
     </head>
-    <title>Student Details</title>
+    <title>Edit Student Details</title>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar bg-dark border-bottom border-body"  data-bs-theme="dark" >

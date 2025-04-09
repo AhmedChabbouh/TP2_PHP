@@ -35,7 +35,7 @@ $s=new Section();
 
         </style>
     </head>
-    <title>Student Details</title>
+    <title>Add Student </title>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar bg-dark border-bottom border-body"  data-bs-theme="dark" >
