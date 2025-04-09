@@ -20,9 +20,8 @@ class Etudiant
 
     }
 
-    public function afficherEtudiant(bool $isAdmin)
+    public function afficherEtudiant(bool $isAdmin,$etudiants)
     {
-        $etudiants = $this->ListeEtudiant();
         $section = new Section();
         $i = 0;
         foreach ($etudiants as $etudiant) {
@@ -96,6 +95,13 @@ class Etudiant
         $req->execute([$name, $birthday, $section, $id]);
     }
 
+    public function Filtrer($filter)
+    {
+        $query ="select * from etudiant where name like ? or birthday like ? or section like ?";
+        $req = $this->bd->prepare($query);
+        $req->execute(['%' . $filter . '%', '%' . $filter . '%', '%' . $filter . '%']);
+        return $req->fetchAll(PDO::FETCH_OBJ);
+    }
     public
     function addEtudiant($name, $birthday, $section, $photo)
     {
