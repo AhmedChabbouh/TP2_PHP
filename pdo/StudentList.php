@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php $title ="Student List";include 'header.php'; ?>
 <?php
 require_once 'Etudiant.php';
 $etudiant = new Etudiant();

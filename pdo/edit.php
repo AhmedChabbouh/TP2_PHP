@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php $title="Student Details"; include 'header.php'; ?>
 
 <?php
 try{
@@ -37,66 +37,67 @@ $etudiant = $e->getEtudiantById($id);
             Laissez Vide Les informations que tu ne veux pas changer
         </div>
         <div>
-            <form method="POST" enctype="multipart/form-data">
-                donnez le nom de l'etudiant :
-                <input class="form-control me-2" type="text" name="name">
-                <?php
-                if (isset($_POST['name']) and $_POST['name'] == "" and isset($_POST['change'])) {
-                    $_POST['name'] = $etudiant->name;
-                }
-                ?>
-                <br>
-                donnez la date de naissance de l'etudiant :
-                <input class="form-control me-2" type="date" name="birthday">
-                <?php
-                if (isset($_POST['birthday']) and $_POST['birthday'] == "" and isset($_POST['change'])) {
-                    $_POST['birthday'] = $etudiant->birthday;
-                }
-                ?>
-                <br>
-                donnez la section de l'etudiant :
-                <input class="form-control me-2" type="text" name="section">
-                <?php
-                if (isset($_POST['section']) && ($_POST['section'] != "") && ($s->getSectionId($_POST['section']) == null)) {
-                    echo "<div style='color:red'>Section  Invalide!</div>";
-                } elseif (isset($_POST['section']) and $_POST['section'] == "" and isset($_POST['change'])) {
-                    $_POST['section'] = $e->getSectionId($etudiant->section);
-                }
-                ?>
-                <br>
-                donner une photo de l'etudiant :
-                <input class="form-control me-2" type="file" name="photo">
-                <?php
-                if (isset($_FILES['photo'])) {
-                    if ($_FILES['photo']['type'] != 'image/jpeg' and isset($_POST['change'])) {
-                        echo "<div style='color:red'>Ce n'est pas une photo!</div>";
-                    } elseif ($_FILES['photo']['size'] == 0 and isset($_POST['change'])) {
-                        $_FILES['photo']['name'] = $etudiant->image;
-                    }
-                }
-                ?>
-                <br>
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" name="confirm" class="btn btn-outline-secondary" style="position: absolute;">
-                        Valider Les Données
-                    </button>
-                </div>
-                <div style="width:30px;heigth: 30px;"><br><br></div>
-            </form>
+        <form method="POST" enctype="multipart/form-data">
+            donnez le  nom de l'etudiant :
+            <input class="form-control me-2" type="text" name="name"  >
+            <?php
+            if(isset($_POST['name'])and $_POST['name']=="" and isset($_POST['change']) ){
+                $_POST['name']=$etudiant->name;
+           }
+            ?>
+            <br>
+            donnez la date de naissance de l'etudiant :
+            <input class="form-control me-2" type="date" name="birthday"  >
+            <?php
+            if(isset($_POST['birthday'])and $_POST['birthday']=="" and isset($_POST['change']) ){
+                $_POST['birthday']=$etudiant->birthday;
+           }
+            ?>
+            <br>
+            donnez la section de l'etudiant :
+            <input class="form-control me-2" type="text" name="section" >
+            <?php
+            if(isset($_POST['section'])&&($_POST['section']!="")&&($s->getSectionId($_POST['section']) == null)){
+              echo "<div style='color:red'>Section  Invalide!</div>";
+           }
+           elseif(isset($_POST['section'])and $_POST['section']=="" and isset($_POST['change']) ){
+            $_POST['section']=$s->getSectionById($etudiant->section);}
+            ?>
+            <br>
+            donner une photo de l'etudiant :
+            <input class="form-control me-2" type="file" name="photo"  >
+            <?php
+            if(isset($_FILES['photo']))
+              {
+                $d='images/'.$_FILES['photo']['name'];
+                if($_FILES['photo']['size']!=0 and $_FILES['photo']['type']!='image/jpeg'  and isset($_POST['change']) ){
+                    echo "<div style='color:red'>Ce n'est pas une photo!</div>";}
+              elseif($_FILES['photo']['size']==0 and isset($_POST['change']) ){
+                $d=$etudiant->image;
+              }
+           }
+            ?>
+            <br>
+            <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" name="change" class="btn btn-outline-secondary" style="position: absolute;">Valider Les Données</button>
+            </div>
+            <div style="width:30px;heigth: 30px;"><br><br></div>
+        </form>
         </div>
-    </div>
-    <?php
+        </div>
+        <?php
 
-    if (isset($_POST['change']) and $_FILES['photo']['type'] == 'image/jpeg') {
-        move_uploaded_file($_FILES['photo']['tmp_name'], 'images/' . $_FILES['photo']['name']);
+if(isset($_POST['change']) && ($_FILES['photo']['type']=='image/jpeg' or $_FILES['photo']['size']==0))
+{
+    move_uploaded_file($_FILES['photo']['tmp_name'], $d);
+    $e->updateEtudiant($_POST['name'],$_POST['birthday'],$s->getSectionId($_POST['section']),$id,$d);
+    header("Location: StudentList.php ");
+    exit();
 
-        $e->updateEtudiant($_POST['name'], $_POST['birthday'], $id, $s->getSectionId($_POST['section']), 'images/' . $_FILES['photo']['name']);
-        header("Location: StudentList.php ");
-        exit();
-    }
-    }
-    catch (PDOException $e) {
-    }
+}
+}
+catch(PDOException $e){
+}
 
 
     ?>

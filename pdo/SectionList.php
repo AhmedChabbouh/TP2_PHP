@@ -34,9 +34,16 @@
             <?php
             include 'Section.php';
             $section = new Section();
-            $section->ListeSection();
+            $section->afficherSection();
+            $s=$section->listSection();
+            for($j=0;$j<count($s);$j++){
+                if(isset($_POST['action'.$j]))
+                {
+                  header("Location: List.php?id=".$s[$j]->id);
+                  exit();
+                }
+            }
             ?>
         </tbody>
     </table>
-</body>
-</html>
+<?php include 'footer.php'; ?>

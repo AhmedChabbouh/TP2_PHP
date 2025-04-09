@@ -1,4 +1,4 @@
-<?php include 'header.php' ?>
+<?php $title="Student Details"; include 'header.php' ?>
 <?php
 include_once 'Etudiant.php';
 $id = $_GET['id'];
@@ -11,17 +11,17 @@ $etudiant = $e->getEtudiantById($id);
 <style>
     .form {
 
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 500px;
-        height: 500px;
-        padding: 20px;
-        border-radius: 10px;
-        background-color: #f8f9fa;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border: 1px solid #ced4da;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: fit-content;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ced4da;
 
     }
 
