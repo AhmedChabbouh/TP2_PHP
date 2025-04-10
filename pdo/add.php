@@ -1,7 +1,7 @@
 <?php $title="Add Student"; include 'header.php'; ?>
 <?php
 try{
-include 'Etudiant.php';
+include 'classes/autoload.php';
 $e = new Etudiant();
 $s = new Section();
 ?>

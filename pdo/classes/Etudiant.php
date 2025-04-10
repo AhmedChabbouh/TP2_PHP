@@ -1,6 +1,5 @@
 <?php
-include_once 'connexionBD.php';
-include_once 'Section.php';
+include_once 'autoload.php';
 
 class Etudiant
 {

@@ -1,9 +1,10 @@
 <?php $title ="Student List";include 'header.php'; ?>
 <?php
-require_once 'Etudiant.php';
+require_once 'classes/autoload.php';
 $etudiant = new Etudiant();
 $etudiants = $etudiant->ListeEtudiant();
 if (isset($_POST['add'])) {
+    unset($_SESSION['students']);
   header("Location: add.php");
   exit();
 }
@@ -15,13 +16,14 @@ for ($j = 0; $j < count($etudiants); $j++) {
     }
     if (isset($_POST['delete'.$j])) {
         $etudiant->deleteEtudiant($etudiants[$j]->id);
+        unset($_SESSION['students']);
         header("Location: StudentList.php");
         exit();
 
     }
 
     if (isset($_POST['edit'.$j])) {
-        echo $j;
+        unset($_SESSION['students']);
         header("Location: edit.php?id=".$etudiants[$j]->id);
         exit();
     }
@@ -100,7 +102,7 @@ if(!isset($_SESSION['students'])){
             </tr>
         </thead>
         <tbody>
-        <?php require_once 'Etudiant.php';
+        <?php require_once 'classes/autoload.php';
         $etudiant = new Etudiant();
         $etudiant->afficherEtudiant($_SESSION['user']['role']=='admin',$_SESSION['students']);
         

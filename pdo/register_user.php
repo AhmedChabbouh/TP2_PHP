@@ -1,6 +1,5 @@
 <?php
-include "User.php";
-include "connexionBD.php";
+include "classes/autoload.php";
 session_start();
 $errors = [];
 $name = $_POST['name'];

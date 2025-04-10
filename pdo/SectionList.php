@@ -1,7 +1,7 @@
 <?php $title = "Liste Sections";
 include 'header.php'; ?>
 <?php
-require_once 'Section.php';
+require_once 'classes/autoload.php';
 $section = new Section();
 if (!isset($_SESSION["sections"])) {
     $_SESSION["sections"] = $section->listSection();

@@ -1,5 +1,5 @@
 <?php
-include_once('connexionBD.php');
+include_once('classes/autoload.php');
 $password = sha1($_POST['password']);
 $email = $_POST['email'];
 $db=connexionBD::getInstance();

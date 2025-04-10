@@ -2,7 +2,7 @@
 
 <?php
 try{
-include 'Etudiant.php';
+include 'classes/autoload.php';
 $id = $_GET['id'];
 $e = new Etudiant();
 $s = new Section();

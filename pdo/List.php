@@ -1,6 +1,6 @@
 
 <?php
-include_once 'Etudiant.php';
+include_once 'classes/autoload.php';
 $id=$_GET['id'];
 $e=new Etudiant();
 $s=new Section();
