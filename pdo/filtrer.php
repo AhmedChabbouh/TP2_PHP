@@ -11,7 +11,8 @@ try {
     if (isset($_POST['search'])) {
         $etudiant = new Etudiant();
         $etudiants = $_SESSION['students'];
-        $search = $_POST['search'];
+        $search = trim($_POST['search']);
+        echo $_POST['search'];
         $_SESSION['students'] = $etudiant->Filtrer($search);
     } else {
         $etudiants = $_SESSION['students'];

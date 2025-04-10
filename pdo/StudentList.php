@@ -36,19 +36,21 @@ if(!isset($_SESSION['students'])){
 <div class="alert alert-secondary" role="alert">
     Liste des etudiants
 </div>
-<form class="d-flex" role="search" method="POST" action="filtrer.php">
-    <input class="form-control " name="search" type="search" style="width:400px;" aria-label="Search">
-    <div style="width:5px; "></div>
-    <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <form class="d-flex" role="search" method="POST" action="filtrer.php">
+        <input class="form-control" name="search" type="search" style="width:400px;" placeholder="Rechercher un etudiant" aria-label="Search">
+        <div style="width:5px;"></div>
+        <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
     </form>
 
-<?php if($_SESSION['user']['role'] == 'admin'): ?>
-    <form class="d-flex" method="POST" action="StudentList.php">
-        <button type="submit" name="add" class="btn btn-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/9977/9977366.png" alt="add" width="30" height="30">
-        </button>
-    </form>
-<?php endif; ?>
+    <?php if($_SESSION['user']['role'] == 'admin'): ?>
+        <form method="POST" action="StudentList.php">
+            <button type="submit" name="add" class='btn btn-link' >
+                <img src="https://cdn-icons-png.flaticon.com/512/9977/9977366.png" alt="add" width="40" height="40">
+            </button>
+        </form>
+    <?php endif; ?>
+</div>
 
 
 <br><br>
@@ -100,7 +102,8 @@ if(!isset($_SESSION['students'])){
         <tbody>
         <?php require_once 'Etudiant.php';
         $etudiant = new Etudiant();
-        $etudiant->afficherEtudiant($_SESSION['user']['role']=='admin',$etudiants);
+        $etudiant->afficherEtudiant($_SESSION['user']['role']=='admin',$_SESSION['students']);
+        
         ?>
         </tbody>
     </table>
